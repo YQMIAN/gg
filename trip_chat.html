@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" href="common.css">
+
+    <style>
+        body {
+            background: gray url("source/chatB2.jpg") 0/100% auto;
+        }
+
+        #reviews {
+            width: 800px;
+            min-height: 900px;
+            position: relative;
+            padding-bottom: 60px;
+            background-color: rgba(250, 235, 215, 0.3);
+            margin: 0 auto;
+        }
+
+        #reviews h2:first-child {
+            color: red;
+            text-align: center;
+        }
+
+        #show_reviews {
+            width: 600px;
+            min-height: 900px;
+            margin: 0 auto;
+
+            text-align: left;
+            padding-bottom: 200px;
+        }
+
+        #show_reviews li {
+            max-width: 300px;
+            text-align: left;
+            padding-left: 10px;
+            margin: 10px 5px;
+            display: inline-block;
+        }
+
+        #show_reviews li span {
+            background-color: azure;
+            padding: 2px 5px;
+        }
+
+        #show_reviews li img {
+            max-width: 200px;
+        }
+
+        #msg {
+            width: 600px;
+            height: 100px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            border-radius: 0px 50px 0 0;
+            border: rgba(238, 203, 11, 0.6) solid 2px;
+            background-color: rgba(179, 223, 247, 0.6);
+            position: fixed;
+            bottom: 100px;
+            left: 30.2%;
+
+        }
+
+        #takePhotoBoard {
+            position: fixed;
+            left: 280px;
+            bottom: 300px;
+            width: 1000px;
+            display: none;
+
+        }
+
+        #cav {
+            background-color: aquamarine;
+        }
+
+        #DrawImgBoard {
+            width: 400px;
+            /*height: 500px;*/
+            padding: 0 auto;
+            position: fixed;
+            left: 600px;
+            bottom: 250px;
+            display: none;
+        }
+
+        h2 {
+            transition: all 2s;
+        }
+
+        h2:hover {
+            text-shadow: 5px 2px 20px #66ff99, -5px 2px 20px #66ff99;
+        }
+
+        #articlePre {
+            writing-mode: vertical-lr;
+            position: absolute;
+            left: 60px;
+            top: 150px;
+            color: rgba(118, 244, 206, 0.7);
+            transition: all 1s;
+        }
+
+        #articleNex {
+            writing-mode: vertical-lr;
+            position: absolute;
+            left: 100px;
+            top: 220px;
+            color: rgba(118, 244, 206, 0.7);
+            transition: all 1s;
+        }
+       ul{
+           margin: 0;
+           padding: 0;
+       }
+        .re{
+            display: block;
+            background-color: gray;
+            width: 100px;
+            margin: 0;
+            text-align: center;
+            margin: 10px 20px;
+        }
+        #erji{
+            position: absolute;
+            width: 300px;
+            height:30px;
+            overflow: hidden;
+        }
+        #erji:hover{
+            height: 70px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+<ul id="erji">
+<a href="index.html" class="re" target="_parent">回到首页</a>
+    <a href="shopping.html" class="re">去购物</a>
+</ul>
+<h3 id="articlePre"></h3>
+<h3 id="articleNex"></h3>
+<div id="reviews">
+    <h2 style="color: rgba(229,131,114,0.9);">即时匿名说</h2>
+
+    <br>
+    <ul id="show_reviews">
+
+    </ul>
+
+    <div id="msg">
+        <textarea style="width: 500px;height: 50px;"></textarea>
+        <button style="margin-top: 10px" onclick="sendmsg()">发表</button>
+        <br>
+        <button id="chooseImg" onclick="chooseImg()">选择图片</button>
+        <input type="file" style="display:none">
+        <input id="takePhoto" type="button" onclick="TakePhoto()" value="拍照上传">
+        <input id="trawImg" type="button" onclick="DrawImg()" value="画图描绘">
+    </div>
+</div>
+
+<div id="takePhotoBoard">
+    <video id="v1" width="480" height="320" controls style="display: inline-block"></video>
+    <canvas id="cav" width="480" height="320" style="display: inline-block"></canvas>
+    <br>
+    <button onclick="openPhoto()">打开摄像头</button>
+    <button onclick="takePhoto()">拍照</button>
+    <button onclick="subPhoto()">确定</button>
+    <button onclick="closePhoto()">关闭</button>
+    <br>
+</div>
+
+<div id="DrawImgBoard">
+    <canvas id="cav2" width="350" height="450" style="background-color:gray"></canvas>
+    <br>
+    <button onclick="subDraw()">确定</button>
+    <button onclick="eraseDraw()">清除</button>
+    <button onclick="closeDraw()">关闭</button>
+</div>
+
+
+<script>
+    var ws = new WebSocket("ws://127.0.0.1:8080/trip_chat")
+    ws.OPEN
+    var imgData = null; //存储图片的base64字符串
+
+    //监听ws开启事件、消息到来事件
+    ws.onopen = function () {
+        ws.onmessage = function (eve) {
+
+            if (eve.data.startsWith("data:image")) {
+                //如果是图片就拼接图片
+                let review = "<li>" + "某匿名游客:" + "<img style='background-color: gray' src=" + eve.data + ">" + "</li><br>"
+                // let review="<li>"+"<img src="+eve.data+" width=100% "+ ">"+"</li>"
+                //这里使用了jQuery
+                $("#show_reviews").append(review);
+                //发送完了就把imgData清空
+                imgData = null;
+            }
+            else {
+                //如果是字符串就接字符串
+                let review = "<li>" + "某匿名游客:" + "<span>" + eve.data + "</span>" + "</li><br>"
+                $("#show_reviews").append(review);
+            }
+
+
+        }
+
+    }
+
+    var sendmsg = function (eve) {
+        if (imgData != null) {
+
+            ws.send(imgData)
+            return;
+        }
+        let msgtext = document.querySelector("#msg>textarea");
+        if (msgtext.value == "" || msgtext.value == null) {
+            alert("输入不能为空")
+        }
+        else {
+            ws.send(msgtext.value)
+            msgtext.value = "";
+        }
+
+    }
+
+    //选择图片
+    var chooseImg = function () {
+        let noneFile = document.querySelector("[type=file]");
+        noneFile.click();
+
+        noneFile.onchange = function () {
+            let file = noneFile.files[0]
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                imgData = reader.result
+
+            }
+
+        }
+
+    }
+
+
+    var mediaVideoTracks = null;
+    var v1 = document.getElementById("v1")
+    var cav = document.getElementById("cav")
+    var ctx = cav.getContext("2d")
+
+    function TakePhoto() {
+        document.getElementById("takePhotoBoard").style.display = "block";
+    }
+
+    //打开摄像头
+    openPhoto = function () {
+        let mediaOption = {
+            audio: false,
+            video: {width: 480, height: 320, facingMode: "user"}
+        }
+        navigator.mediaDevices.getUserMedia(mediaOption).then(mediaSuccess).catch(mediaError)
+    }
+
+    function mediaSuccess(stream) {
+        mediaVideoTracks = stream.getVideoTracks() //获取所有轨道
+        // v1.src=window.URL.createObjectURL(stream)  //给vedio标签指定视频数据来源
+        v1.srcObject = stream
+        v1.onloadeddata = function () {
+            this.play() //视频加载好了就播放
+        }
+    }
+
+    function mediaError(error) {
+        console.log("打开摄像头失败")
+    }
+
+    //拍照
+    function takePhoto() {
+        ctx.drawImage(v1, 0, 0, 480, 320)
+    }
+
+    //提交照片
+    function subPhoto() {
+        //把画布上的图片转化为base64格式，存储在imgData全局变量里面
+        imgData = cav.toDataURL()
+    }
+
+    //关闭拍照面板
+    function closePhoto() {
+        for (let i in mediaVideoTracks) {
+            mediaVideoTracks[i].stop()
+        }
+        document.getElementById("takePhotoBoard").style.display = "none";
+    }
+
+
+    var Elisener
+
+    //打开画画面板
+    function DrawImg() {
+        document.getElementById("DrawImgBoard").style.display = "block"
+    }
+
+    var cav2 = document.getElementById("cav2")
+    var ctx2 = cav2.getContext("2d")
+    //对cav2画板添加事件监听器
+    cav2.addEventListener("mousedown", drawStart)
+    cav2.addEventListener("mouseup", drawEnd)
+
+    function drawStart() {
+        ctx2.beginPath()
+        let startX = event.offsetX
+        let startY = event.offsetY
+        ctx2.moveTo(startX, startY);
+        Elisener = cav2.addEventListener("mousemove", drawMove)
+
+    }
+
+    function drawMove() {
+
+        let moveX = event.offsetX
+        let moveY = event.offsetY
+        ctx2.lineTo(moveX, moveY)
+        ctx2.stroke()
+
+
+    }
+
+    function drawEnd() {
+        cav2.removeEventListener("mousemove", drawMove)
+        console.log("0.0.0.0")
+    }
+
+    function subDraw() {
+        imgData = cav2.toDataURL()
+    }
+
+    function eraseDraw() {
+        ctx2.clearRect(0, 0, 500, 500)
+    }
+
+    function closeDraw() {
+        document.getElementById("DrawImgBoard").style.display = "none"
+    }
+
+
+    //存储文案
+    const pre = ["人生虽有离别日", "孤帆远影碧空尽", "落霞与孤鹜齐飞"]
+    const nex = ["山水应有相逢时&nbsp&nbsp——", "唯见长江天际流&nbsp&nbsp——", "秋水共长天一色&nbsp&nbsp——"]
+
+    //侧边栏的文案
+    function RandomArticle() {
+        let articlePre = document.getElementById("articlePre")
+        let articleNex = document.getElementById("articleNex")
+        let index = parseInt(Math.random() * 3)
+        articlePre.innerText = pre[index]
+        articleNex.innerHTML = nex[index]
+
+    }
+
+    RandomArticle()
+    window.setInterval(RandomArticle, 60 * 1000);
+</script>
+
+</body>
+
+</html>

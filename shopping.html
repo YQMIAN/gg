@@ -1,0 +1,177 @@
+<html>
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table{
+            border:1px solid;
+        }
+
+        table th,td{
+            box-sizing: border-box;
+            width: 100px;
+            height: 80px;
+            max-width: 150px;
+            max-height: 80px;
+            border:1px solid;
+            overflow: hidden;
+            text-align: center;
+            padding:0 10px;
+        }
+        table th{
+            height: 50px;
+        }
+        table th:nth-of-type(5){
+            width: 150px;
+        }
+        table td:nth-of-type(5){
+            width: 150px;
+        }
+
+        #shopping{
+            width: 1000px;
+            margin: 100px auto;
+        }
+        tr:nth-child(odd){background:#E87F81;}
+        tr:nth-child(even){background:#3FA6C6;}
+        .navli{
+            list-style:none;
+            width:10%;
+            text-align:center;
+            border-radius:10px 10px 10px 0px;
+            border: solid 2px #71AE7B;
+            box-shadow:5px 2px 8px 5px #ccc;
+            transition: all 2s ease;
+            background-color: aqua;
+        }
+        .navli:hover{transform: scale(1.2) skew(-5deg,-5deg);}
+    </style>
+</head>
+<body background="ancient.jpg">
+<a href="index.html" target="_parent" style="margin:50px;"><li class="navli" style="float: left;margin: 20px 30px">回到首页</li></a>
+<h1 align="center" style="color:crimson">纪念品商城</h1>
+<div id="shopping">
+    <table cellspacing="0" align="center">
+        <tr style="width: inherit;">
+            <th>图片</th>
+            <th>商品编号</th>
+            <th>价格(元)</th>
+            <th>种类</th>
+            <th>描述</th>
+            <th>已售</th>
+            <th>购买</th>
+            <th>添加到购物车</th>
+        </tr>
+    </table>
+    <p id="pp"></p>
+
+    <script>
+        var xhr=new XMLHttpRequest()
+        xhr.open('POST','shopping')
+
+        var goods=new Array();//创建一个数组goods
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4){
+                if(xhr.status==200){
+
+                    let res=xhr.responseText
+                    let goodsStr=res.split('+')
+
+                    //循环，将串拆分再拆分，放进对象里面，push到goods数组里面去
+                    for(let i in goodsStr){
+                        console.log(goodsStr.length)
+                        let str=goodsStr[i]
+                        let items=str.split(",")
+                        var obj={};
+                        for(let j in items){
+                            let k=items[j].split(":")
+                            obj[k[0]]=k[1]
+                        }
+                        goods.push(obj)
+                    }
+
+                    //遍历数组，将结果显示
+                    let table=document.querySelector('#shopping table')
+                    for(var i=0;i<goods.length;i++){
+                        table.innerHTML+="<tr>"+
+                            "<td>"+"<img src="+ goods[i].goods_imgSrc +"width=100%;height=100%>"+"</td>"+
+                            "<td>"+goods[i].goods_id+"</td>"+
+                            "<td>"+goods[i].goods_price+"</td>"+
+                            "<td>"+goods[i].goods_type+"</td>"+
+                            "<td>"+goods[i].goods_description+"</td>"+
+                            "<td>"+goods[i].goods_sellCount+"</td>"+
+                            "<td>"+"<button value="+ goods[i].goods_id  + "onclick=BUY(value)"  +">购买</button>"+"</td>"+
+                            "<td>"+"<button value="+ goods[i].goods_id  + "onclick=addShoppingCar(value)" +">添加</button>"+"</td>"+
+                            "</tr>"
+                    }
+
+                }
+            }
+        }
+        xhr.send(null);
+
+
+        //购买纪念品函数开始，利用ajax访问后台的名为BUY的servlet程序
+        function  BUY(value) {
+            var xhr=new XMLHttpRequest();
+            xhr.open("POST","BUY",true)
+            xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=utf-8")
+            xhr.responseType="text"
+            var str="BUY_goods_id="+value+"&user_id="+sessionStorage.getItem("user_id")
+            xhr.onreadystatechange=()=>{
+                if(xhr.readyState==4){
+                    if(xhr.status==200){
+                        alert(xhr.response)
+                    }
+                }
+            }
+
+            var determin=confirm("确定购买编号为"+value+"的商品？")
+            if(determin){
+                xhr.send(str);
+            }
+        } //购买纪念品函数结束
+
+        //添加到购物车函数开始
+        function  addShoppingCar(value) {
+            var xhr=new XMLHttpRequest();
+            xhr.open("POST","addShoppingCar",true)
+            xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=utf-8")
+            xhr.onload=()=>{
+                if( xhr.status==200){
+                    alert(xhr.responseText)
+                }
+
+            }
+
+            var determin=confirm("是否要将编号为"+value+"的商品添加到您的购物车？")
+            if(determin){
+                var str="goods_id="+value+"&user_id="+sessionStorage.getItem("user_id")
+                xhr.send(str)
+            }
+        } //添加到购物车函数结束
+
+        var xhr2=new XMLHttpRequest();
+        xhr2.open("post","source/indexB3.jpg")
+        xhr2.responseType="blob"
+        xhr2.onreadystatechange=()=>{
+            if(xhr2.readyState==4){
+                if(xhr2.status==200){
+                    var background=window.URL.createObjectURL(xhr2.response)
+                    let img=document.createElement("img");
+                    img.src=background;
+                    img.style.height="5px";
+                    img.style.width="100%"
+                    document.querySelector("body").appendChild(img)
+                }
+            }
+        }
+        xhr2.send(null);
+
+    </script>
+</div>
+
+
+</body>
+</html>

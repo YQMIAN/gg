@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            #div1{height: 200px; width:100%; display: flex; margin: 50px 20px;}
+            h3{text-align:  center; margin-top: 50px;}
+            #img2{margin-left: 10px;}
+            #pp{text-align: center;}
+            #bt2{ margin-left: 260px;}
+            #bt3{ margin-left: 100px;}
+          
+        </style>
+    </head>
+    <body>
+        <div id="div">
+            <div id="div1">
+                <img src="image/mianfei.png" height="100%"/>
+                <h3>雁栖湖：从名字上我们得知这是大雁会去的地方，已经和成为和其他鸟类的集散地，每年秋天和春天的时候，羽毛迎面铺满湖面。湖面放眼望去，看上去让人感觉环境很优美，除过风景之外有很多的娱乐项目，比如大家喜欢的空中飞行，水降落伞，攀岩等，这些都是年轻人比较喜欢的项目，玩起来特别的刺激。当然如果你喜欢玩游戏，一定要记得感受一下，周围环境的秀丽。
+</h3>
+                
+            </div>
+            
+           <div id="div1">
+               <img src="image/mianfei1.png" height="100%" id="img2"/>
+                <h3>宽窄巷子:首先这里是免费的，不管什么时候去都可以，里面有各种各样的店铺，各种各样的建筑，相比于井里的巷子，宽窄巷子更加具有复古的气息，颇有古声，古色文艺感觉。不少人说这里最大的特色变成吃，确实比锦鲤的好吃的还要多，虽然里面的店铺可能长相很相似，但是作为一个现代人对于这里的文化还是比较喜欢的，基本上四川的小吃全部容纳在其中。
+
+</h3>
+                
+            </div>  
+             <div id="div1">
+               <img src="image/mianfei2.png" height="100%" id="img2"/>
+                <h3>唐指山风景区：作为当地非常著名的景点，同样是旅游爱好者，特别爱打卡的地方不少。登山爱好者每次会前往，这里是个最佳的选择，不仅有青山，同时有湖泊环绕着，现在已经到湖泊上面修建了很多的水上游乐项目，可以供游客们游玩。湖泊周围有十分丰富的植被覆盖，基本上大家感觉不到夏天的炎热，如果渴了可以直接舀一勺清泉的池水来解渴，这样的景观特别适合大家夏天时避暑使用。
+</h3>
+                
+            </div>  
+           	
+        </div>
+        <div id="pp">
+            <scan>用户评价：</scan><input type="button" class="flowerBtn hvr-grow" onclick="presentGift('yyLive','flower',this)" value="很棒！" id="bt1"/><span>0</span><br>
+            <input type="button" class="eggBtn hvr-grow" onclick="presentGift('yyLive','egg',this)" value="不好！" id="bt2"/><span>0</span><a href="gl.html"><input type="button" value="返回上一页" id="bt3"/></a>
+        </div>
+        <script>
+			var dbName="LiveBroadcast";	//数据库名
+			var dbVersion=1;			//版本号
+			var storeName="channelStore";//数据仓库名称
+			var connection=null;		//数据库连接
+			
+			//1.获取IDBFactory对象，作为数据库的操作入口
+			var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+			//使用以下语句删除原来的数据库
+//			indexedDB.deleteDatabase(dbName);
+			//数据库初始化
+			function init(){
+				//2.获取IDBRequest对象，用于创建数据库连接的请求
+				var dbRequest=indexedDB.open(dbName,dbVersion);
+				dbRequest.onsuccess=function(event){
+					//3.在数据库连接成功时，获取连接成功时的数据库连接对象，对象类型为IDBDatabase类型
+					connection=event.target.result;
+					console.log("数据库连接成功。");
+					loadGiftData();
+				};
+				dbRequest.onerror=function(event){
+					console.log('数据库连接失败！');
+				};
+				dbRequest.onupgradeneeded=function(event){
+					connection=event.target.result;
+					if(!connection.objectStoreNames.contains(storeName)){
+						var optionalParameters={
+							keyPath:"id",
+							autoIncrement:true
+						};
+			           var objectStore=connection.createObjectStore(storeName,optionalParameters);
+			           objectStore.createIndex('channelIndex','channel',{unique:true}); 
+					  console.log("对象仓库创建成功！");			
+			        }
+					var tx=event.target.transaction;
+					console.log("数据库版本更新成功！版本"+event.oldVersion+"=>版本"+event.newVersion);
+				};
+			}
+			//加载Indexdb数据库中的数据
+			function loadGiftData(){
+				var nodeList=document.getElementsByTagName("dl");
+				//4.创建一个只读事务，数据的操作放在事务中进行处理
+				var tx=connection.transaction(storeName,'readonly'); 
+				//5.获得数据仓库对象（相当于关系数据库中的表）
+				var objectStore= tx.objectStore(storeName); 
+				//6.获得IDBCursor游标
+				var query=objectStore.openCursor();
+				//7.通过移动游标来遍历查询的结果集
+				query.onsuccess=function(event){
+					var cursor=event.target.result;
+					if(cursor){
+						var data=cursor.value;
+						for(var i in nodeList){
+							if(nodeList[i].id==data.channel){
+								var spanList=nodeList[i].getElementsByTagName("span");
+								spanList[0].innerHTML=data.flowerNum;
+								spanList[1].innerHTML=data.eggNum;
+							}
+						}
+						cursor.continue();
+					}
+				}
+			}
+			//送鲜花、扔鸡蛋操作
+			function presentGift(channel,type,object){
+				//4.创建一个读写事务，数据的操作放在事务中进行处理
+				var tx=connection.transaction(storeName,'readwrite');
+				//5.获得数据仓库对象（相当于关系数据库中的表）
+				var objectStore= tx.objectStore(storeName); 
+				//6.获得IDBCursor游标
+				var query=objectStore.openCursor();
+				//7.通过游标来改变数据
+				query.onsuccess=function(event){
+					var cursor=event.target.result;
+					try{
+						//当记录存在时，对数据进行更新
+						var num=0;
+						if(cursor&&cursor.value.channel==channel){
+							var data=cursor.value;
+							if(type=="flower"){
+								data.flowerNum=data.flowerNum+1;
+								num=data.flowerNum;
+							}else{
+								data.eggNum=data.eggNum+1;
+								num=data.eggNum;
+							}
+							cursor.update(data);
+							object.nextSibling.innerHTML=num;
+							return;
+						}else if(cursor){
+							cursor.continue();
+						}else{
+							//当记录不存在时，插入一条新纪录
+							var flowerNum=0,eggNum=0;
+							num=1;
+							if(type=="flower"){
+								flowerNum=1;
+							}else{
+								eggNum=1;
+							}
+							var data={
+								channel:channel,
+								flowerNum:flowerNum,
+								eggNum:eggNum
+							}
+							objectStore.put(data);
+							object.nextSibling.innerHTML=num;
+							return;
+						}
+					}finally{
+						cursor=null;
+					}
+				}
+			}
+			window.onload=init;
+		</script>
+    </body>
+</html>

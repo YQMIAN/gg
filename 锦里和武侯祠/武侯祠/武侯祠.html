@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>武侯祠</title>
+<link rel="stylesheet" type="text/css" href="武侯祠.css" />
+	</head>
+<body>
+<div id="aa">
+<span class="a1">chengDu</span>
+<span class="a2">chengDu武侯祠</span><span class="a3">武侯祠</span>
+</div>
+      <hr width="100%" size="2" color="#3300FF" />
+ <div id="wrapper">
+			<ul id="list">
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/6.jpg" />
+            <h2>成都</h2></a></li>
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/5.jpg" />
+            <h2>成都</h2></a></li>
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/4.jpg" />
+		    <h2>成都</h2></a></li>
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/3.jpg" />
+			<h2>成都</h2></a></li>
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/2.jpg" />
+            <h2>成都</h2></a></li>
+            <li><a href="http://www.xhu.edu.cn" target="new"><img src="image/1.jpg" />
+			<h2>成都</h2></a></li>
+			</ul>
+</div>
+        
+<div>
+<ul>
+
+        
+        <li>纪念的是蜀国丞相诸葛亮，明朝初年并入汉昭烈庙，也是全国影响最大的三国遗迹博物馆。</li>
+        <li>由惠陵、汉昭烈庙、武侯祠三部分组成。</li>
+        <li>祠内供奉刘备、诸葛亮等蜀汉英雄塑像50尊</li>
+        <li>武大门、二门、刘备殿、过厅、诸葛亮殿、三义庙等，排列在从南到北的一条中轴线上。</li>
+</ul>
+</div>
+<hr width="100%" size="1" color="#3300FF" />
+         <div id="top">
+      <div id="menu">
+      <ul>
+        <li>咨询电话<br/>
+        028-85552397;028-85535951<br/></li>
+        <li>网址<br/>
+       http://www.wuhouci.net.cn</li>
+        <li>用时参考<br/>
+        1-3小时</li>
+      </ul>
+    </div>
+   </div>
+ 
+         <dl>
+         <dt style="font-size:20px; font-weight:800; color:#F00">交通</dt>
+         <dd>
+1、可乘坐1路、334路、335路、57路、77路至武侯祠站下，步行可达。
+2、可乘坐8、21路、间7路至武侯祠东街站下，步行可达。到达。</dd>
+         </dl>
+         <dl>
+         <dt style="font-size:20px; font-weight:800; color:#F00">门票</dt>
+         <dd>
+         <div>
+         <ul>
+        <li> 成人票:全价票50人民币/年票100人民币 (01月01日-12月31日 周一-周日)</li>
+        <li>
+半票:6周岁-18周岁的未成年人/学生、全日制大学本科及以下学历学生凭有效证件。</li>
+<li>
+免票:离休人员、残疾人、现役军人、公安干警、革命烈属、本市老年人、60周岁以上的老年人、6周岁及以下或身高1.3米及以下的儿童、大中小学生15人及以上的团体凭有效证件。</li></ul><br />
+         tips:<br />
+         庙会期间需购买门票，具体以景区公示为准。</div>
+         </dd>
+         </dl>
+         <dl>
+         <dt style="font-size:20px; font-weight:800; color:#F00">开放时间</dt>
+         <dd>全天(全天)<br />
+         09:00-18:00(全天)；停止入场时间:17:00 (1月1日-12月31日 周一-周日)<br />
+</dd>
+</dl>
+  <hr width="100%" size="2" color="#3300FF" />
+<h1 style="text-align:center">游客评价</h1>
+    <p id="message-output">Message not yet sent</p>
+<iframe src="MessageChannelBetweenDocAndIFrame2.html" width=100% height="200"></iframe>
+      <form>
+      <label for="message-input">上传你的评价吧：</label>
+      <input type="text" id="message-input" autofocus>
+      <button>提交</button>
+    </form>
+<table width="100%">
+<tr align="center">
+<td width="50%"><a href="index.html">回到首页</a></td>
+<td width="50%"><a href="#title">回到顶部</a></td></tr>
+</table>
+<script>
+    var input = document.getElementById('message-input');
+    var output = document.getElementById('message-output');
+    var button = document.querySelector('button');
+    var iframe = document.querySelector('iframe');
+    var channel = new MessageChannel();
+    var port1 = channel.port1;
+    iframe.addEventListener("load", onLoad);
+    
+    function onLoad() {
+      iframe.contentWindow.postMessage('武侯祠', '*', [channel.port2]);
+      button.addEventListener('click', onClick);
+      port1.onmessage = onMessage;
+      
+    }
+
+    function onClick(e) {
+      e.preventDefault();
+      port1.postMessage(input.value);
+    }
+    function onMessage(e) {
+      output.innerHTML = e.data;
+      input.value = '';8
+    }
+  </script>
+  
+ 
+
+</body>
+</html>

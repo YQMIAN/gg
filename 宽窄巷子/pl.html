@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title><style>
+    * {
+        margin: 0;
+        padding: 0;
+       
+    }
+
+    body {
+        padding: 100px;
+    }
+
+    textarea {
+        width: 200px;
+        height: 100px;
+        border: 1px pink solid;
+        /* 不设置轮廓 */
+        outline: none;
+        /* 设置其不能改变长宽 */
+        resize: none;
+    }
+.tt{margin-left: 600px;}
+    li {
+        width: 300px;
+        padding: 5px;
+        background-color: #eee;
+        font-size: 15px;
+        margin: 15px 0;
+        background-color: #ffcc66;
+    }
+
+    li a {
+        float: right;
+    }
+    li button{float:right;}
+    input{width: 50px;}
+</style>
+    
+</head>
+
+
+<body style=" background: url('image/back.jpeg')">
+    <textarea class="tt"></textarea>
+    <input type="button" value="发布"/>
+    <ul class="tt">
+        <li>宽窄巷子风景真的好好看啊！<button id="btn1">点赞</button></li>  
+        <li>简直物美价廉！<button id="btn2">点赞</button></li>
+        <li>人是真的太多了啊啊啊<button id="btn3">点赞</button></li>
+        <li>成都天气是真的太热太热了！<button id="btn4">点赞</button></li>
+        <li>成都宽窄巷子yyds！<button id="btn5">点赞</button></li>
+        <li><a href="index1.html"><input type="button" value="返回" id="bt3"/></a></li>
+    </ul>
+    <script>
+        //1、获取元素
+        var buts=document.getElementsByTagName("button");
+        for(var i=0;i<buts.length;i++){
+            buts[i].addEventListener("click",ss)
+        }
+        function ss() {
+
+            if(this.innerText=="点赞"){
+                this.innerText="已赞";
+            }
+            else{
+                this.innerText="点赞";
+            }
+
+        }
+
+        // var btn1=document.getElementById("btn1");
+        //  var btn2=document.getElementById("btn2");
+        //   var btn3=document.getElementById("btn3");
+        //    var btn4=document.getElementById("btn4");
+        //     var btn5=document.getElementById("btn5");
+        //
+         var txt = document.querySelector("textarea");
+        var btn = document.querySelector("input");
+        var ul = document.querySelector("ul");
+        // //2、给button绑定点击事件
+        // btn1.onclick=function(){
+        //
+        //     if(btn1.innerText="点赞"){
+        //         btn1.innerText="已赞";
+        //     }
+        //     else{
+        //         btn1.innerText="点赞";
+        //     }
+        // }
+        //  btn2.onclick=function(){
+        //
+        //     if(btn2.innerText="点赞"){
+        //         btn2.innerText="已赞";
+        //     }
+        //     else{
+        //         btn2.innerText="点赞";
+        //     }
+        // }
+        //  btn3.onclick=function(){
+        //
+        //     if(btn3.innerText="点赞"){
+        //         btn3.innerText="已赞";
+        //     }
+        //     else{
+        //         btn3.innerText="点赞";
+        //     }
+        // }
+        //  btn4.onclick=function(){
+        //
+        //     if(btn4.innerText="点赞"){
+        //         btn4.innerText="已赞";
+        //     }
+        //     else{
+        //         btn4.innerText="点赞";
+        //     }
+        // }
+        //  btn5.onclick=function(){
+        //
+        //     if(btn5.innerText="点赞"){
+        //         btn5.innerText="已赞";
+        //     }
+        //     else{
+        //         btn5.innerText="点赞";
+        //     }
+        // }
+        
+        btn.onclick = function () {
+            if (txt.value == "") {//当文本框中没有文字时，提示
+                alert("您没有输入内容")
+            } else {
+                //创建元素li作为留言区
+                var li = document.createElement("li");
+                //将文本框中的内容放到li中,a标签中href中的内容代表什么都不执行
+                li.innerHTML = txt.value + "<a href='javascript:;'>删除</a>"
+                txt.value = "";//添加之后文本框的内容清空
+                //将留言添加到ul中，而且在最上方
+                ul.insertBefore(li, ul.children[0]);
+                //当点击删除时删除ul中的li
+                var as = document.querySelectorAll("a");
+                //循环给每个删除绑定事件
+                for (var i = 0; i < as.length; i++) {
+                    as[i].onclick = function () {
+                        //删除当前a标签所在位置的父节点li
+                        ul.removeChild(this.parentNode);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

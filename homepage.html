@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #user_info {
+            width: 800px;
+            height: 300px;
+            border: aquamarine 1px dashed;
+            background-color: beige;
+            margin: 0 auto;
+            padding-left: 30px;
+            padding-top: 20px;
+        }
+
+        #user_info_board {
+            line-height: 30px
+        }
+
+        #user_hobby {
+            line-height: unset
+        }
+
+        a {
+            margin-left: 900px;
+            text-decoration: none;
+            color: #000033;
+            text-shadow: 3px 3px 3px #f00;
+            background-color: #ffcc66;
+            font-size: 36px;
+        }
+
+        #user_orders {
+            margin-left: 600px;
+            display: inline-block;
+            width: 300px;
+            background-color: aquamarine
+        }
+
+        #reIndex {
+            display: inline-block;
+            width: 150px;
+            margin: 0;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+
+        }
+
+        #portrait {
+            width: 80px;
+            height: 80px;
+            box-sizing: border-box;
+            border-radius: 40px;
+            background-color: red;
+            border: transparent;
+        }
+    </style>
+</head>
+<body style=" background: url('宽窄巷子/image/homepage.jpeg')">
+
+<div id="user_info">
+    <div id="user_info_board">
+        <img id="portrait" src="source/indexB.jpg">
+        <button onclick="upPortraitFile()">上传头像</button>
+        <input type="file" id="portraitFile" style="display: none"><br>
+        性别:<span id="user_sex"></span><br>
+        账号:<span id="user_id"></span><br>
+        爱好:<span id="user_hobby" style="border: black 2px solid">这个人竟然没有爱好....</span><br>
+    </div>
+</div>
+<div id="user_orders" style=" ">
+    <table>
+
+
+    </table>
+</div>
+<a href="index.html" id="reIndex" target="_parent">回到首页</a>
+<script>
+    var xhr = new XMLHttpRequest();
+    xhr.open("post", "homepage", true)
+    xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded;charset=utf-8")
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            var info = xhr.responseText.split("*")
+
+
+            document.getElementById("user_sex").innerHTML = info[1];
+            document.getElementById("user_id").innerHTML = info[2];
+            document.getElementById("user_hobby").innerHTML = info[3];
+
+        }
+    }
+
+    var str = "user_id=" + sessionStorage.getItem("user_id")
+    xhr.send(str)
+
+
+    var xhr2 = new XMLHttpRequest();
+    xhr2.open("post", "orders", true)
+    xhr2.setRequestHeader("content-type", "application/x-www-form-urlencoded;charset=utf-8")
+    xhr2.onload = function () {
+        if (xhr2.status == 200) {
+            var str = "<caption>已成交订单</caption><th>订单编号</th><th>商品编号</th>"
+            var user_order = document.querySelector("#user_orders table");
+            user_order.innerHTML = str;
+
+            var orders = xhr2.responseText.split("+")
+
+            for (var i in orders) {
+
+                // user_order.innerHTML+="<tr>"
+
+                var order = orders[i].split("*")
+                user_order.innerHTML += "<tr>" + "<td>" + order[0] + "</td>" + "<td>" + order[1] + "</td>" + "</tr>"
+
+
+                // user_order.innerHTML+="</tr>"
+            }
+
+        }
+    }
+    xhr2.send(str)
+
+    //点击按钮，间接激活文件输入域,将图片换成头像，将图片Blob存入indexDB
+    function upPortraitFile() {
+        let file = document.querySelector("#portraitFile");
+        file.click();
+        file.onchange = () => {
+
+            if (file.files[0] != null) {
+                let reader = new FileReader()
+                reader.readAsArrayBuffer(file.files[0])
+
+
+                reader.onload = () => {
+                    let i8arr = new Int8Array(reader.result);
+                    let bl = new Blob([i8arr])
+                    let srcURL = window.URL.createObjectURL(bl)
+                    document.querySelector("#portrait").src = srcURL
+                    //打开indexDB数据库,然后将图像的Blob数据传进去，没有就创建
+                    IndexDBStoreAdd(bl);
+                }
+
+            }
+
+        }
+    }
+
+    var DBrequest
+    var dbName = "user_info";
+    var dbVersion = 1;
+    var storeName = "user_portrait"
+
+    //打开indexDB，返回DBrequest
+    function openIndexDB() {
+
+        DBrequest = indexedDB.open(dbName, dbVersion);
+        return DBrequest;
+    }
+
+    function IndexDBStoreAdd(bl) {
+        let DBrequest = openIndexDB();
+        DBrequest.onupgradeneeded = () => {
+            let storeName = "user_portrait"
+            let option = {
+                keyPath: "user_id",
+                autoIncrement: false
+            }
+            let DBconnection = DBrequest.result
+            DBconnection.createObjectStore(storeName, option)
+        }
+        DBrequest.onsuccess = () => {
+            //成功打开数据库就开始对这数据库进行操作,
+
+            let DBconnection = DBrequest.result
+            let DBtransaction = DBconnection.transaction(storeName, "readwrite")
+            let DBstore = DBtransaction.objectStore(storeName)
+            //得到用户id
+            let user_id = window.sessionStorage.getItem("user_id")
+            let obj = new Object();
+            obj["user_id"] = user_id;
+            obj["portrait"] = bl;
+            DBstore.put(obj);
+        }
+    }
+
+    //刷新网页，就会访问indexDB，找到自己的头像
+
+    new Promise(function (resolve, reject) {
+        let DBrequest = openIndexDB();
+        DBrequest.onupgradeneeded = () => {
+            reject("打开IDB数据库失败")
+        }
+        DBrequest.onsuccess = () => {
+            let DBTransaction = DBrequest.result.transaction(storeName, "readwrite")
+            let DBstore = DBTransaction.objectStore(storeName)
+            let user_id = window.sessionStorage.getItem("user_id")
+            let DBstoreDo = DBstore.get(user_id)
+
+            DBstoreDo.onsuccess = () => {
+                let res = DBstoreDo.result
+                resolve(res.portrait)
+
+            }
+
+
+        }
+    }).then(function (bl) {
+            document.querySelector("#portrait").src = window.URL.createObjectURL(bl)
+
+    }, function (rej) {
+        alert(rej)
+    }).catch(function (bl) {
+        alert("promise错误")
+    })
+
+    //
+</script>
+</body>
+</html>
