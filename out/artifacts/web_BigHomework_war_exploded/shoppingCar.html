@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+            margin: 0 auto;
+        }
+        table th,td{
+            width: 100px;
+            height: 80px;
+            max-width: 150px;
+            max-height: 100px;
+            border: 1px solid;
+            overflow: hidden;
+            text-align: center;
+            padding:0 10px;
+        }
+
+        table th{
+            height: 50px;
+        }
+        table th:nth-of-type(5){
+            width: 150px;
+        }
+        tr:nth-child(odd){
+            background: #EB7879;
+        }
+        tr:nth-child(even){background: #6EC7EF;}
+        .navli{
+            list-style:none;
+            width:10%;
+            text-align:center;
+            border-radius:10px 10px 10px 0px;
+            border: solid 2px #71AE7B;
+            box-shadow:5px 2px 8px 5px #ccc;
+            transition: all 2s ease;
+        }
+        .navli:hover{transform: scale(1.2) skew(-5deg,-5deg);}
+    </style>
+</head>
+<body background="pandakey.jpg">
+<a href="index.html" target="_parent" style="margin:50px"><li class="navli">回到首页</li></a>
+<h1 align="center" style="color: chocolate">我的购物车</h1>
+<div style="width: 1000px;margin:100px auto;">
+    <table cellspacing="0" align="center">
+        <tr>
+            <th>订单编号</th>
+            <th>图片</th>
+            <th>商品编号</th>
+            <th>价格(元)</th>
+            <th>种类</th>
+            <th>描述</th>
+            <th>付款</th>
+            <th>删除订单</th>
+        </tr>
+    </table>
+
+    <script>
+
+        function show(shopping_id,choice,goods_id){
+            var xhr=new XMLHttpRequest();
+            xhr.open("post","shoppingCar")
+            xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded; charset=utf-8")
+            xhr.responseType="text"
+            var goods=[];
+            xhr.onload=()=>{
+                if(xhr.status==200){
+                    let res=xhr.response
+                    let everyOrder=res.split('+')
+
+                    //循环，将串拆分再拆分，放进对象里面，push到goods数组里面去
+                    for(let i in everyOrder){
+
+                        let str=everyOrder[i]
+                        let properties=str.split(",")
+                        var obj={};
+                        for(let j in properties){
+                            let k=properties[j].split(":")
+                            obj[k[0]]=k[1]
+                        }
+                        goods.push(obj)
+                    }
+
+                    //遍历数组，将结果显示
+                    let table=document.getElementsByTagName("table")[0]
+                    var inner="   <tr>\n" +
+                        "            <th>订单编号</th>" +
+                        "            <th>图片</th>" +
+                        "            <th>商品编号</th>" +
+                        "            <th>价格(元)</th>" +
+                        "            <th>种类</th>\n" +
+                        "            <th>描述</th>\n" +
+                        "            <th>付款</th>\n" +
+                        "            <th>删除订单</th>\n" +
+                        "        </tr>"
+                    table.innerHTML=inner;
+                    if (goods.length==0){
+                        alert("购物车为空！")
+                    }
+                    for(var i=0;i<goods.length;i++){
+                        table.innerHTML+="<tr>"+
+                            "<td>"+goods[i].shopping_id+"</td>"+
+                            "<td>"+"<img src="+ goods[i].goods_imgSrc +"width=100%;height=100%>"+"</td>"+
+                            "<td>"+goods[i].goods_id+"</td>"+
+                            "<td>"+goods[i].goods_price+"</td>"+
+                            "<td>"+goods[i].goods_type+"</td>"+
+                            "<td>"+goods[i].goods_description+"</td>"+
+                            "<td>"+"<button value="+ goods[i].shopping_id  +"id="+goods[i].goods_id+ "onclick=show(value,'pay',id)"  +">付款</button>"+"</td>"+
+                            "<td>"+"<button value="+ goods[i].shopping_id +"id="+goods[i].goods_id+ "onclick=show(value,'del',id)" +">删除</button>"+"</td>"+
+                            "</tr>"
+                    }
+
+                }
+            }
+
+            var str="user_id="+sessionStorage.getItem("user_id")+"&shopping_id="+shopping_id+"&choice="+choice+"&goods_id="+goods_id
+            xhr.send(str);
+
+        };
+        show("","","");
+
+
+
+
+
+    </script>
+</div>
+</body>
+</html>

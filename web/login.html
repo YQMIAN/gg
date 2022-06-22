@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><!-- -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-image:url(images/tu1.jpg)}
+        #login_board {
+            height: 100%;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        ul.polaroids li {
+            display: inline-block;
+        }
+        ul.polaroids a {
+            background: #fff;
+            display: block;
+            margin: 0 0 27px 30px;
+            width: auto;
+            padding: 10px 10px 15px;
+            text-align: center;
+            font-family: "Marker Felt", sans-serif;
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            shadow: 0 3px 6px rgba(0, 0, 0, .25);
+            transform: rotate(-2deg);
+            transition: transform .8s linear;
+
+        }
+        ul.polaroids img {
+            display: block;
+            height: 100px;
+            margin-bottom: 12px;
+        }
+        ul.polaroids a:after { content: attr(title); }
+        ul.polaroids li:nth-child(even) a {
+            transform: rotate(5deg);
+        }
+        ul.polaroids li:nth-child(2n) a {
+            position: relative;
+            top: -5px;
+            transform: none;
+        }
+        ul.polaroids li:nth-child(3n) a {
+            position: relative;
+            right: 5px;
+            transform: rotate(-10deg);
+        }
+        ul.polaroids li:nth-child(4n) a {
+            position: relative;
+            right: 5px;
+            top: 8px;
+
+        }
+        ul.polaroids li:nth-child(5n) a {
+            position: relative;
+            left: -5px;
+            top: 3px;
+        }
+        ul.polaroids li a:hover {
+            transform: scale(1.25);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .5);
+            position: relative;
+            z-index: 5;
+        }
+    </style>
+</head>
+
+<body>
+<div id="login_board" >
+    <a href="index.html" target="_parent" style="margin:50px">回到首页</a>
+    <ul class="polaroids">
+        <li> <a href="宽窄巷子/index1.html" title="锦里"> <img src="images/b2.jpeg" alt="锦里" /> </a> </li>
+        <li> <a href="锦里和武侯祠/锦里/锦里1.html" title="都江堰"> <img src="images/b5.jpeg" alt="都江堰" /> </a> </li>
+        <li> <a href="锦里和武侯祠/武侯祠/武侯祠.html" title="武侯祠"> <img src="images/b3.jpeg" alt="武侯祠" /> </a> </li>
+        <li> <a href="都江堰和春熙路/春熙路.html" title="春熙路"> <img src="images/b4.jpeg" alt="春熙路" /> </a> </li>
+        <li> <a href="都江堰和春熙路/都江堰.html" title="宽窄巷子"> <img src="images/b1.jpeg" alt="宽窄巷子" /> </a> </li>
+    </ul>
+    <ul         style="  width: 220px;
+            height: 210px;
+            padding: 0;
+            margin: 200px auto;
+            background-color:#39F;
+            list-style: none;
+            overflow: hidden;">
+        <div style="width: 200px;height: 180px; margin:20px auto; ">
+            <form   action="login">
+                <li>欢迎来到登录注册界面!</li>
+                <li>账号:<input type="text"  id="account" name="account" placeholder="请输入账号"><font color="#FF0000"> *</font></li>
+                <li>密码:<input type="password" id="password"  name="password" placeholder="请输入密码"><font color="#FF0000"> *</font></li>
+                <pre><input  id="login_click"  type="button" value="登录"> <input   onclick="registGo()" type="button" value="注册"></pre>
+                <p id="tips"></p>
+            </form>
+        </div>
+    </ul>
+</div>
+<script>
+    document.getElementById('login_click').addEventListener('click',sub)
+    var log_response=null;
+    var ifRight;
+    function sub(){
+        let form=document.getElementsByTagName("form")[0]
+           let ifNaN=isNaN(account.value)
+        if(!ifNaN){
+            //用ajax交互
+            var xhr=false;
+            try{xhr=new XMLHttpRequest()}catch(filed){
+                xhr=false;
+            }
+
+            if(!xhr){
+                alert("浏览器版本过低，请更换或升级浏览器！")
+            }
+
+            xhr.open('post','login')
+            xhr.setRequestHeader("content-type","application/x-www-form-urlencoded")
+            xhr.onreadystatechange=()=>{
+                if(xhr.readyState==4)
+                    if(xhr.status==200){
+                        let obj=JSON.parse(xhr.responseText)
+                        ifRight=Boolean(obj["ifRight"])
+                        if(ifRight){
+                            sessionStorage.setItem("user_id",obj["user_id"])
+                            location.href="index.html";
+                        }
+                        else{
+                            account.style.border="2px red solid";
+                            password.style.border="2px red solid"
+                            tips.style.color="red"
+                            tips.innerHTML="账号或密码错误"
+                            window.setTimeout(()=>{account.style.border="";password.style.border=""; tips.innerHTML=""},3000)
+                        }
+                    }
+            }
+
+            var params="account="+account.value+"&password="+password.value;
+            xhr.send(params)
+
+        }
+        else{
+            alert("账号必须为纯数字")
+        }
+
+
+    }
+
+    function registGo(){
+        window.location.href="regist.html"
+    }
+
+
+</script>
+</body>
+
+</html>

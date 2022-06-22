@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>图片轮播</title>
+	<style type="text/css">
+		body {
+			font-size: 10px;
+		}
+		a {
+			color: #FFF;
+			text-decoration: none;
+		}
+		#wrapper, ul, li, img {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+		#wrapper {
+			width: 320px;
+			height: 160px;
+			/*border: 1px solid #000;*/
+			margin: 5px auto;
+			overflow: hidden;
+			/*position: relative;*//*该属性设置对wrapper不起实质性作用，只是为了其子元素list能够相对于wrapper原点绝对定位*/
+		}
+		#list {
+			position:relative;/*导航栏定位方案一：相对定位*/
+			/*position: absolute;*//*导航栏定位方案二：相对定位*/
+			left: 0;
+			top: 0;
+			width: 1600px;/*3200px;*/
+			height: 100%;
+			/*animation: 40s move infinite;*/
+		}
+		#list li {
+			list-style: none;
+			width: 320px;
+			height: 160px;
+			color: #fff;
+			
+		}
+		h2 {
+			width:100%;
+			text-align: center;
+			/*border:1px solid red;*/
+		}
+		
+		/*导航栏布局方案一：弹性盒布局*/
+		#list {
+			display:flex;
+		}
+		#list li {
+			flex:1;
+		}
+		/*导航栏布局方案二*/
+		/*#list li {
+			float: left;
+		}*/
+		
+		/*li中文本布局方案一：相对定位*/
+		h2 {
+			position: relative;
+			top: -3em;
+		}
+		
+		/*li中文本布局方案二：绝对定位*/
+		/*该属性设置对li不起实质性作用，只是为了其子元素h2能够相对于li原点绝对定位*/
+		/*#list li {
+			position: relative;
+		}
+		h2 {
+			position: absolute;
+			top: 120px;
+		}*/
+		/**********************************/
+		
+		img {
+			width: 100%;
+			/*height: 100%;*/
+		}
+		span {
+			margin-left: 140px;
+		}
+		/*关键帧动画设计*/
+		#list {
+			animation: 15s move infinite;
+		}
+		/*暂停播放动画*/
+		li:hover  {/*ul:hover 不少浏览器不支持此动画暂停方法，可加范围限定，如#wrapper ul:hover*/
+			animation-play-state: paused;
+		}
+		@keyframes move {
+			0%,10% {
+			left:-1280px;
+			}
+			20%,30% {
+			left:-960px;
+			}
+			40%,50% {
+			left:-640px;
+			}
+			60%,70% {
+			left:-320px;
+			}
+			80%,90% {
+			left:0px;
+			}
+			/*可以不到100%，到最后一帧多停留一段时间；也可以精确计算(解不唯一），但设置较麻烦，如有a幅图片，则a*x+(a-1)*y=100,其中x表示在一幅画面上停留时间，y表示切换时间*/
+		}
+		
+	</style>
+	</head>
+
+	<body>
+   
+	<h1 style="text-align:center;">都江堰</h1>
+    <article>
+		<div id="wrapper">
+			<ul id="list">
+			<li><a href="http://www.xhu.edu.cn/" target="new"><img src="景点导航/b5.jpeg">
+						<h2>都江堰<span>5/5</span></h2></a>
+					</li>
+			<li><a href="http://www.xhu.edu.cn/" target="new"><img src="景点导航/d1.jpeg">
+						<h2>都江堰<span>4/5</span></h2></a>
+					</li>
+			<li><a href="http://www.xhu.edu.cn/" target="new"><img src="景点导航/d2.jpeg">
+						<h2>都江堰<span>3/5</span></h2></a>
+					</li>
+			<li><a href="http://www.xhu.edu.cn/" target="new"><img src="景点导航/d3.jpeg">
+						<h2>都江堰<span>2/5</span></h2></a>
+					</li>
+			<li><a href="http://www.xhu.edu.cn/" target="new"><img src="/景点导航/d4.jpeg">
+						<h2>都江堰<span>1/5</span></h2></a>
+					</li>
+			</ul>
+		</div><br><br><br>
+	
+        <p class="art_author">都江堰&nbsp;&nbsp;<time>2022-03-18</time>&nbsp;&nbsp;点击：888</p>
+        <hr color="red">
+            <section class="sect">
+                <div class="example"></div>
+                <p class="art_content" style="color:red">简介：</p><br>都江堰，位于四川省成都市都江堰市城西，坐落在成都平原西部的岷江上， [1]  是由渠首枢纽（鱼嘴、飞沙堰、宝瓶口）、灌区各级引水渠道，各类工程建筑物和大中小型水库和塘堰等所构成的一个庞大的工程系统， [12]  渠首占地面积200余亩。 [7]  它担负着四川盆地中西部地区7市（地）40县（市、区）1130万余亩农田的灌溉、成都市多家重点企业和城市生活供水，以及防洪、发电、漂水、水产、养殖、林果、旅游、环保等多项目标综合服务，是四川省国民经济发展不可替代的水利基础设施。
+                <div style="text-align:center;">
+  <video src="都江堰夜景.mp4" id="video1" width="300" controls loop poster="景点导航/d1.jpeg">
+     
+  </video>
+  </div>
+<p class="art_content" style="color:red">附近交通：</p>地铁：2号线、3号线<br>公交：104路、335路、56路、43路、48路
+            </section>
+            <hr color="gray" style="position:relative; top:0px;">
+            <section class="sect">
+            	<p class="author_intro">作者简介：未知（00后），联系方式：12345678  E-mail：@8888,
+                西华大学在读本科生四人组</p><a href="mailto:10086@sina.com">10086@sina.com</a>
+            </section>
+  </article>
+  <p id="message-output">Message not yet sent</p>
+
+    <form>
+      <label for="message-input">评论</label>
+      <input type="text" id="message-input" autofocus>
+      <button>评价</button>
+    </form>
+
+    <iframe src="MassagechannelBetweenDocAndIframe.html" width="480" height="200"></iframe>
+   <audio autoplay="autoplay" loop><source src="菊次郎的夏天.mp3"></audio>
+  </body>
+  <script>
+    var input = document.getElementById('message-input');
+    var output = document.getElementById('message-output');
+    var button = document.querySelector('button');
+    var iframe = document.querySelector('iframe');
+    var channel = new MessageChannel();
+    var port1 = channel.port1;
+
+    // Wait for the iframe to load
+    iframe.addEventListener("load", onLoad);
+    
+    function onLoad() {
+	   // Transfer port2 to the iframe
+      iframe.contentWindow.postMessage('init', '*', [channel.port2]);
+      // Listen for button clicks
+      button.addEventListener('click', onClick);
+      // Listen for messages on port1
+      port1.onmessage = onMessage;
+	  //port1. addEventListener('message', onMessage); // Listen for messages on port1
+      //port1.start();//使用addEventListener绑定的话需要显式地调用start()
+
+      
+    }
+
+    // Post a message on port1 when the button is clicked
+    function onClick(e) {
+      e.preventDefault();
+      port1.postMessage(input.value);
+    }
+
+    // Handle messages received on port1
+    function onMessage(e) {
+      output.innerHTML = e.data;
+      input.value = '';
+    }
+  </script>
+
+</body></html>

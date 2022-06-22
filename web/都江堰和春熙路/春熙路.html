@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!-- saved from url=(0169)file:///C:/Users/JL/AppData/Local/Temp/Rar$EXa4264.27482/%E5%AE%9E%E9%AA%8C2%20CSS%E7%BB%BC%E5%90%88%E5%AE%9E%E9%AA%8C%20%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81/Exp2_1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>图片轮播</title>
+    <link href="春熙路1.css" rel="stylesheet" type="text/css">
+<head></head>
+	
+	<!--<style type="text/css">
+		body {
+			font-size: 10px;
+		}
+		a {
+			color: #FFF;
+			text-decoration: none;
+		}
+		#wrapper, ul, li, img {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+		#wrapper {
+			width: 320px;
+			height: 160px;
+			/*border: 1px solid #000;*/
+			margin: 5px auto;
+			overflow: hidden;
+			/*position: relative;*//*该属性设置对wrapper不起实质性作用，只是为了其子元素list能够相对于wrapper原点绝对定位*/
+		}
+		#list {
+			position:relative;/*导航栏定位方案一：相对定位*/
+			/*position: absolute;*//*导航栏定位方案二：相对定位*/
+			left: 0;
+			top: 0;
+			width: 1600px;/*3200px;*/
+			height: 100%;
+			/*animation: 40s move infinite;*/
+		}
+		#list li {
+			list-style: none;
+			width: 320px;
+			height: 160px;
+			color: #fff;
+			
+		}
+		h2 {
+			width:100%;
+			text-align: center;
+			/*border:1px solid red;*/
+		}
+		
+		/*导航栏布局方案一：弹性盒布局*/
+		#list {
+			display:flex;
+		}
+		#list li {
+			flex:1;
+		}
+		/*导航栏布局方案二*/
+		/*#list li {
+			float: left;
+		}*/
+		
+		/*li中文本布局方案一：相对定位*/
+		h2 {
+			position: relative;
+			top: -3em;
+		}
+		
+		/*li中文本布局方案二：绝对定位*/
+		/*该属性设置对li不起实质性作用，只是为了其子元素h2能够相对于li原点绝对定位*/
+		/*#list li {
+			position: relative;
+		}
+		h2 {
+			position: absolute;
+			top: 120px;
+		}*/
+		/**********************************/
+		
+		img {
+			width: 100%;
+			/*height: 100%;*/
+		}
+		span {
+			margin-left: 140px;
+		}
+		/*关键帧动画设计*/
+		#list {
+			animation: 15s move infinite;
+		}
+		/*暂停播放动画*/
+		li:hover  {/*ul:hover 不少浏览器不支持此动画暂停方法，可加范围限定，如#wrapper ul:hover*/
+			animation-play-state: paused;
+		}
+		@keyframes move {
+			0%,10% {
+			left:-1280px;
+			}
+			20%,30% {
+			left:-960px;
+			}
+			40%,50% {
+			left:-640px;
+			}
+			60%,70% {
+			left:-320px;
+			}
+			80%,90% {
+			left:0px;
+			}
+			/*可以不到100%，到最后一帧多停留一段时间；也可以精确计算(解不唯一），但设置较麻烦，如有a幅图片，则a*x+(a-1)*y=100,其中x表示在一幅画面上停留时间，y表示切换时间*/
+		}
+		
+	</style>-->
+
+	<body>
+    <div id="move"> 
+	  <span class="a1">春熙路</span> 
+		<span class="a2" style="font-size: 40px" >春熙路</span>
+		<span class="a3">春熙路</span> 
+    </div>
+	<!--<h1 style="text-align:center;">春熙路</h1>-->
+		<br><br>
+   
+		<div id="wrapper">
+			<ul id="list">
+			<li><a href="http://www.xhu.edu.cn/" target="new"><img src="景点导航/b4.jpeg">
+						<h2>春熙路<span>5/5</span></h2></a>
+					</li>
+			<li><a href="http://www.xhu.edu.cn/" target="new"><img src="景点导航/6.jpg">
+						<h2>春熙路<span>4/5</span></h2></a>
+					</li>
+			<li><a href="http://www.xhu.edu.cn/" target="new"><img src="景点导航/7.jpg">
+						<h2>春熙路<span>3/5</span></h2></a>
+					</li>
+			<li><a href="http://www.xhu.edu.cn/" target="new"><img src="景点导航/8.jpg">
+						<h2>春熙路<span>2/5</span></h2></a>
+					</li>
+			<li><a href="http://www.xhu.edu.cn/"><img src="景点导航/9.jpg">
+						<h2>春熙路<span>1/5</span></h2></a>
+					</li>
+			</ul>
+		</div><br><br><br>
+	<article>
+        <p class="art_author">春熙路&nbsp;&nbsp;<time>2022-03-18</time>&nbsp;&nbsp;点击：888</p>
+        <hr color="red">
+            <section class="sect">
+                <div class="example"></div>
+                <p class="art_content" style="color:red;font-size: 20px">简介：</p>春熙路位于四川省成都市锦江区春熙路街道，覆盖北新街以东、总府路以南、红星路以西、东大街以北、南新街、中新街以及临街区域，面积大约20公顷。春熙路热闹繁华，现大约有商业网点700家，网点面积大约220000㎡，被业内誉为中国特色商业街。
+                <div style="text-align:center;"><br>
+  <video src="春熙路.mp4" id="video1" width="300" controls loop poster="景点导航/b4.jpeg">
+     
+  </video>
+  </div>
+<p class="art_content" style="color:red;font-size: 20px">附近交通：</p>地铁：2号线、3号线<br>公交：104路、335路、56路、43路、48路
+            </section><br>
+            <p style="color:red;font-size: 20px">开放时间：</p>
+            <p>全天</p>
+            <hr color="gray" style="position:relative; top:0px;">
+            <section class="sect">
+            	<p class="author_intro">作者简介：未知（00后），联系方式：12345678  E-mail：@8888,
+                西华大学在读本科生四人组</p><a href="mailto:10086@sina.com">10086@sina.com</a>
+            </section>
+  </article>
+  <p id="message-output"></p>
+
+    <form>
+      <label for="message-input">评论</label>
+      <input type="text" id="message-input" autofocus>
+      <button>评价</button>
+    </form>
+
+    <iframe src="MassagechannelBetweenDocAndIframe.html" width="480" height="200"></iframe>
+   <audio autoplay="autoplay" loop><source src="菊次郎的夏天.mp3"></audio>
+   <canvas id="canvas"></canvas>
+  </body>
+  <script>
+    var input = document.getElementById('message-input');
+    var output = document.getElementById('message-output');
+    var button = document.querySelector('button');
+    var iframe = document.querySelector('iframe');
+    var channel = new MessageChannel();
+    var port1 = channel.port1;
+    var g=new Date();
+	
+    // Wait for the iframe to load
+    iframe.addEventListener("load", onLoad);
+    
+    function onLoad() {
+	   // Transfer port2 to the iframe
+      iframe.contentWindow.postMessage('init', '*', [channel.port2]);
+      // Listen for button clicks
+      button.addEventListener('click', onClick);
+      // Listen for messages on port1
+      port1.onmessage = onMessage;
+	  //port1. addEventListener('message', onMessage); // Listen for messages on port1
+      //port1.start();//使用addEventListener绑定的话需要显式地调用start()
+//Message not yet sent
+      
+    }
+
+    // Post a message on port1 when the button is clicked
+    function onClick(e) {
+      e.preventDefault();
+      port1.postMessage(input.value);
+    }
+
+    // Handle messages received on port1
+    function onMessage(e) {
+      output.innerHTML = e.data;
+      input.value = '';
+    }
+	 var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width=canvas.parentNode.offsetWidth;
+	canvas.height=canvas.parentNode.offsetHeight;
+        //动态x,y坐标
+        var x = 50;
+        var y = 50;
+ 
+        var speed = -1;
+        var speedY = 2;
+ 
+        //让小球动起来，定时器
+        var timer = setInterval(function() {
+            // 开始之前先清除画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+ 
+            x += speed;
+            if (x <= 20) {
+                speed = Math.abs(speed);
+            } else if (x >=canvas.width-20) { //向左移动
+                speed = -speed;
+            }
+ 
+            y += speedY;
+            if (y >= canvas.height-20) { //向上移动
+                speedY = -speedY;
+            } else if (y <= 20) { //向下移动
+                speedY = -speedY;
+            }
+ 
+            //绘制一个小球
+            ctx.beginPath();
+            // ctx.arc(圆心x,圆心y，半径r,开始弧度，结束弧度，true);
+            ctx.arc(x, y, 20, 0, 2 * Math.PI);
+            ctx.fillStyle = 'skyblue';
+            // 绘制实心
+            ctx.fill();
+            ctx.closePath();
+        }, 30);
+	  
+	
+  </script>
+</html>

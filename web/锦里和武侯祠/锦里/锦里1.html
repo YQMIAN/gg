@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>锦里</title>
+<link rel="stylesheet" type="text/css" href="锦里.css" />
+	</head>
+<body>
+<div id="aa">
+<span class="a1">chengDu</span>
+<span class="a2">chengDu锦里</span><span class="a3">锦里</span>
+</div>
+      <hr width="100%" size="2" color="#3300FF" />
+ <div id="wrapper">
+			<ul id="list">
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/锦里6.jpg" />
+            <h2>成都</h2></a></li>
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/锦里5.jpg" />
+            <h2>成都</h2></a></li>
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/锦里4.jpg" />
+		    <h2>成都</h2></a></li>
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/锦里3.jpg" />
+			<h2>成都</h2></a></li>
+			<li><a href="http://www.xhu.edu.cn" target="new"><img src="image/锦里2.jpg" />
+            <h2>成都</h2></a></li>
+            <li><a href="http://www.xhu.edu.cn" target="new"><img src="image/锦里1.jpg" />
+			<h2>成都</h2></a></li>
+			</ul>
+		</div>
+        
+<div>
+<ul>
+
+        
+        <li>锦里是一条仿古商业街，是成都人气最旺景点之一，也是成都武侯祠博物馆的一部分。</li>
+        <li>在这里，你可以欣赏捏泥人、摆糖画的手艺，也可以逛逛极富三国特色的店铺。</li>
+        <li>街里还有各种四川特色小吃，各种茶楼、咖啡馆、酒吧、客栈等随时可落座</li>
+        <li>黄昏时分，锦里会亮起灯，颇有韵味，适合拍照游玩。</li>
+</ul>
+</div>
+            <hr width="100%" size="1" color="#3300FF" />
+         <div id="top">
+      <div id="menu">
+      <ul>
+        <li>咨询电话<br/>
+        028-66311313;85538914<br/></li>
+        <li>网址<br/>
+       http://www.cdjinli.com</li>
+        <li>用时参考<br/>
+        1-3小时</li>
+      </ul>
+    </div>
+   </div>
+ 
+         <dl>
+         <dt style="font-size:20px; font-weight:800; color:#F00">交通</dt>
+         <dd>【地铁】<br />
+         乘地铁2号线至人民公园站下车，步行约400米即可到达。<br />
+         乘地铁4号线至宽窄巷子站下车，步行约300米即可到达。<br />
+         【公交】<br />
+         乘62/70/93/163/340路公交车至实业街站/长顺中街站下车，步行约320米即可到达。</dd>
+         </dl>
+         <dl>
+         <dt style="font-size:20px; font-weight:800; color:#F00">门票</dt>
+         <dd>
+         <div>免费<br />
+         tips:<br />
+         庙会期间需购买门票，具体以景区公示为准。</div>
+         </dd>
+         </dl>
+         <dl>
+         <dt style="font-size:20px; font-weight:800; color:#F00">开放时间</dt>
+         <dd>全天(全天)<br />
+         (1月1日-12月31日 周一至周日)<br />
+</dd>
+</dl>
+  <hr width="100%" size="2" color="#3300FF" />
+<h1 style="text-align:center">游客评价</h1>
+    <p id="message-output">Message not yet sent</p>
+<iframe src="MessageChannelBetweenDocAndIFrame2.html" width=100% height="200"></iframe>
+      <form>
+      <label for="message-input">上传你的评价吧：</label>
+      <input type="text" id="message-input" autofocus>
+      <button>提交</button>
+    </form>
+<table width="100%">
+<tr align="center">
+<td width="50%"><a href="index.html">回到首页</a></td>
+<td width="50%"><a href="#title">回到顶部</a></td></tr>
+</table>
+<script>
+    var input = document.getElementById('message-input');
+    var output = document.getElementById('message-output');
+    var button = document.querySelector('button');
+    var iframe = document.querySelector('iframe');
+    var channel = new MessageChannel();
+    var port1 = channel.port1;
+    iframe.addEventListener("load", onLoad);
+    
+    function onLoad() {
+      iframe.contentWindow.postMessage('锦里', '*', [channel.port2]);
+      button.addEventListener('click', onClick);
+      port1.onmessage = onMessage;
+      
+    }
+
+    function onClick(e) {
+      e.preventDefault();
+      port1.postMessage(input.value);
+    }
+    function onMessage(e) {
+      output.innerHTML = e.data;
+      input.value = '';
+    }
+  </script>
+  
+ 
+
+</body>
+</html>

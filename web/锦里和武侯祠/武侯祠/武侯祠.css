@@ -1,0 +1,192 @@
+@charset "utf-8";
+/* CSS Document */
+		body {
+		   font-size: 15px;
+		}
+#aa{
+	background: -webkit-gradient(radial,180 200, 50, 300 200, 200, from(white), to(blue));
+    -webkit-background-origin: padding-box;
+    -webkit-background-clip: content-box;
+	overflow: hidden;
+	width: 100%;
+	height: 150px;
+	border: 3px solid #eee;
+	left: 60px;
+	top: -19px;
+    }
+    span {
+	opacity: 0;
+	display: block;
+	height: 50px;
+	font: bold 14px/50px Georgia;
+    }
+    .a1 {
+	animation-iteration-count:3;
+	font-size:20px;
+	transform: translate(55px);
+	animation: animations 5s ease-out;
+   }
+   @keyframes animations {
+   0% {transform:translate(0);opacity:0;}
+   50% {transform:translate(30px);opacity:1;}
+   70% {transform:translate(35px);opacity:1;}
+   100% {transform:translate(60px);opacity:0;}
+   }
+
+    .a2 {
+	animation-iteration-count:3;
+	text-align: center;
+	animation: animations2 5s ease-in-out 4s;
+	font-size:40px ; 
+	color:#C30;
+	text-shadow:0.1em 0.1em 0.1em#F30 ;
+    }
+    @keyframes animations2 {
+    0% {opacity:0;}
+    40% {opacity:.8;}
+    45% {opacity:.3;}
+    50% {opacity:.8;}
+    55% {opacity:.3;}
+    60% {opacity:.8;}
+    100% {opacity:0;}
+    }
+
+    .a3 {
+	animation-iteration-count:3;
+	font-size:20px;
+	transform: translate(100px);
+	animation: animations3 3s ease-out 2s;
+    }
+   @keyframes animations3 {
+   0% {transform:translate(160px);opacity:0;}
+   50% {transform:translate(130px);opacity:1;}
+   70% {transform:translate(125px);opacity:1;}
+   100% {transform:translate(100px);opacity:0;}
+   }  
+
+		ul.nav{ 
+	       min-width:880px;/*否则当小于子元素宽度之和时，露出页面白色背景*/
+	       display:flex;
+	       justify-content:center;
+	     }
+        ul.nav>li{
+	       flex:1;
+	       min-width:110px;
+          }
+		  li.menu-item{
+	       position:relative;/*为使得子元素绝对定位生效*/
+           }
+		a {
+			color: #FFF;
+			text-decoration: none;
+		}
+		#top{
+				width: 900px;
+	height: 87px;
+	margin: 0px auto;}
+		#menu {
+	width: 1000px;
+	height: 32px;
+	line-height: 32px;
+          }
+         #menu li {
+	list-style-type: none;
+	width: 300px;
+	border-left: solid 1px #CBCBCB;
+	text-align: center;
+	float: left;
+     }
+		#wrapper, ul, li, img {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+		#wrapper {
+			width:100%;
+			height:100%;
+			/*border: 1px solid #000;*/
+			margin: 5px auto;
+			overflow: hidden;
+			text-align:center;
+			z-index:-1;
+			/*position: relative;*//*该属性设置对wrapper不起实质性作用，只是为了其子元素list能够相对于wrapper原点绝对定位*/
+		}
+		#list {
+			position:relative;/*导航栏定位方案一：相对定位*/
+			/*position: absolute;*//*导航栏定位方案二：相对定位*/
+			left: 0;
+			top: 0;
+			width: 1600px;/*3200px;*/
+			height: 100%;
+			/*animation: 40s move infinite;*/
+		}
+		#list li {
+			list-style: none;
+			width: 60%;
+			height: 500px;
+			color: #fff;
+			
+		}
+		h2 {
+			width:100%;
+			text-align: center;
+			/*border:1px solid red;*/
+		}
+				
+		h3 {
+		    font-size:40px ; 
+			color:#C30;
+			text-shadow:0.1em 0.1em 0.1em#F30 ;}
+		
+		/*导航栏布局方案一：弹性盒布局*/
+		#list {
+			display:flex;
+		}
+		#list li {
+			flex:1;
+		}
+		/*导航栏布局方案二*/
+		/*#list li {
+			float: left;
+		}*/
+		
+		/*li中文本布局方案一：相对定位*/
+		h2 {
+			position: relative;
+			top: -3em;
+		}
+		
+
+		img {
+			width: 100%;
+			height:100%;
+		}
+		span {
+			margin-left: 140px;
+		}
+		/*关键帧动画设计*/
+		#list {
+			animation: 5s move infinite;
+		}
+		/*暂停播放动画*/
+		#list:hover  {/*ul:hover 不少浏览器不支持此动画暂停方法，可加范围限定，如#wrapper ul:hover*/
+			animation-play-state: paused;
+		}
+		@keyframes move {
+			0%,10% {
+			left:-1280px;
+			}
+			20%,30% {
+			left:-960px;
+			}
+			40%,50% {
+			left:-640px;
+			}
+			60%,70% {
+			left:-320px;
+			}
+			80%,90% {
+			left:0px;
+			}
+			}
+		

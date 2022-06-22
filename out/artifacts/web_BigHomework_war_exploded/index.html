@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        #curTime{
+           width: 150px;
+            height: 30px;
+            float: right;
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="myScreen">
+
+    <div class="userMassage w">
+        <div class="log ">
+            <a class="margingMid initAStyle" href="login.html">
+                登录
+            </a>
+            <a class="margingMid initAStyle" href="regist.html">
+                注册
+            </a>
+        </div>
+        <div id="curTime"></div>
+    </div>
+    <!--个人信息栏目结束-->
+
+    <ul id="navBoard">
+        <a href="宽窄巷子/index1.html">
+            <li><p>宽窄巷子</p></li>
+        </a>
+        <a href="锦里和武侯祠/锦里/锦里1.html">
+            <li>锦里</li>
+        </a>
+        <a href="锦里和武侯祠/武侯祠/武侯祠.html">
+            <li>武侯祠</li>
+        </a>
+        <a href="都江堰和春熙路/春熙路.html">
+            <li>春熙路</li>
+        </a>
+        <a href="都江堰和春熙路/都江堰.html">
+            <li>都江堰</li>
+        </a>
+    </ul>
+    <!--banner开始-->
+    <div class="banner w">
+        <div class="bannerIn">
+            <li><a href="宽窄巷子/index1.html"><img src="source/b1.jpeg"
+                                                width="100%" height="100%"
+                                                alt=""></a></li>
+            <li><a href="锦里和武侯祠/锦里/锦里1.html"><img src="source/b2.jpeg"
+                                width="100%" height="100%"
+                                alt=""></a></li>
+            <li><a href="锦里和武侯祠/武侯祠/武侯祠.html"><img src="source/b3.jpeg"
+                                                                                            width="100%" height="100%"
+                                                                                            alt=""></a></li>
+            <li><a href="都江堰和春熙路/春熙路.html"><img src="source/b4.jpeg"
+                                                width="100%"
+                                                height="100%" alt=""></a>
+            </li>
+            <li><a href="都江堰和春熙路/都江堰.html"><img src="source/b5.jpeg"
+                width="100%" height="100%"
+                alt=""></a></li>
+        </div>
+    </div>
+    <!--banner结束-->
+
+
+    <ul id="user_choice" class="w initMPStyle flex">
+
+        <li><a href="shopping.html"><span class="inlineBlock">纪念品购买</span></a></li>
+        <li><a href="trip_chat.html"><span class="inlineBlock">旅游论坛</span></a></li>
+        <li><a href="shoppingCar.html"><span class="inlineBlock">我的购物车</span></a></li>
+        <li><a href="homepage.html"><span class="inlineBlock">我的主页</span></a></li>
+
+    </ul>
+
+
+</div>
+<!--myScreen结束-->
+
+<script>
+        var date=new Date();
+        var strTime=String(date.getFullYear())+"年"+(date.getMonth()+1)+"月"+date.getDate();
+         localStorage.setItem("currentTime",strTime)
+    document.getElementById("curTime").innerHTML="现在是北京时间："+localStorage.getItem("currentTime")
+</script>
+</body>
+
+</html>

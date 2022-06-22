@@ -1,0 +1,174 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+			font-size: 10px;
+		
+		
+		}
+		a {
+			color: #FFF;
+			text-decoration: none;
+		}
+		#wrapper, ul, li, img {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+		#wrapper {
+			width: 320px;
+			height: 160px;
+			/*border: 1px solid #000;*/
+			margin: 5px auto;
+			overflow: hidden;
+			/*position: relative;*//*该属性设置对wrapper不起实质性作用，只是为了其子元素list能够相对于wrapper原点绝对定位*/
+			margin-top: 150px;
+		}
+		#list {
+			position:relative;/*导航栏定位方案一：相对定位*/
+			/*position: absolute;*//*导航栏定位方案二：相对定位*/
+			left: 0;
+			top: 0;
+			width: 1600px;/*3200px;*/
+			height: 100%;
+			/*animation: 40s move infinite;*/
+		}
+		#list li {
+			list-style: none;
+			width: 320px;
+			height: 160px;
+			color: #fff;
+			
+		}
+		h2 {
+			width:100%;
+			text-align: center;
+			/*border:1px solid red;*/
+		}
+		
+		/*导航栏布局方案一：弹性盒布局*/
+		#list {
+			display:flex;
+		}
+		#list li {
+			flex:1;
+		}
+		/*导航栏布局方案二*/
+		/*#list li {
+			float: left;
+		}*/
+		
+		/*li中文本布局方案一：相对定位*/
+		h2 {
+			position: relative;
+			top: -3em;
+		}
+		
+		/*li中文本布局方案二：绝对定位*/
+		/*该属性设置对li不起实质性作用，只是为了其子元素h2能够相对于li原点绝对定位*/
+		/*#list li {
+			position: relative;
+		}
+		h2 {
+			position: absolute;
+			top: 120px;
+		}*/
+		/**********************************/
+		
+		img {
+			width: 100%;
+			/*height: 100%;*/
+		}
+		#list span {
+			margin-left: 140px;
+		}
+		/*关键帧动画设计*/
+		#list {
+			animation: 15s move infinite;
+		}
+		/*暂停播放动画*/
+		li:hover  {/*ul:hover 不少浏览器不支持此动画暂停方法，可加范围限定，如#wrapper ul:hover*/
+			animation-play-state: paused;
+		}
+@keyframes move {
+			0%,10% {
+			left:-1280px;
+			}
+			20%,30% {
+			left:-960px;
+			}
+			40%,50% {
+			left:-640px;
+			}
+			60%,70% {
+			left:-320px;
+			}
+			80%,90% {
+			left:0px;
+			}
+			/*可以不到100%，到最后一帧多停留一段时间；也可以精确计算(解不唯一），但设置较麻烦，如有a幅图片，则a*x+(a-1)*y=100,其中x表示在一幅画面上停留时间，y表示切换时间*/
+		}
+		canvas{
+			overflow: hidden;
+			z-index:-1;
+			pointer-events:none;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+		#move {
+	        position:absolute;
+	        top: 0%;
+	        left:50%;
+	        overflow: hidden;
+	        width: 300px;
+	        height: 150px;
+	        margin: -75px 0 0 -150px;
+	        border: 3px solid #eee;
+	        background-color:aqua;
+		   margin-top: 10px;
+}
+#move span {
+	opacity: 0;
+	display: block;
+	height: 50px;
+	font: bold 14px/50px Georgia;
+}
+.a1 {
+	transform: translate(55px);
+	animation: animations 2s ease-out;
+}
+@keyframes animations {
+ 0% {transform:translate(0);opacity:0;}
+ 50% {transform:translate(30px);opacity:1;}
+ 70% {transform:translate(35px);opacity:1;}
+ 100% {transform:translate(60px);opacity:0;}
+}
+
+.a2 {
+	text-align: center;
+	font-size: 40px;
+	animation: animations2 5s ease-in-out 4s;
+	animation-fill-mode: forwards;
+}
+@keyframes animations2 {
+ 0% {opacity:0;}
+ 40% {opacity:.8;}
+ 45% {opacity:.3;}
+ 50% {opacity:.8;}
+ 55% {opacity:.3;}
+ 60% {opacity:.8;}
+ 100% {opacity:8;}
+}
+
+.a3 {
+	transform: translate(100px);
+	animation: animations3 2s ease-out 2s;
+	
+}
+@keyframes animations3 {
+ 0% {transform:translate(160px);opacity:0;}
+ 50% {transform:translate(130px);opacity:1;}
+ 70% {transform:translate(125px);opacity:1;}
+ 100% {transform:translate(100px);opacity:0;}
+}

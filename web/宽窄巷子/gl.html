@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+              ul.nav{ 
+	min-width:880px;/*否则当小于子元素宽度之和时，露出页面白色背景*/
+	/*弹性盒布局，水平居中*/
+	display:flex;
+	justify-content:center;
+	}
+        ul.nav>li{
+	flex:1;
+	min-width:110px;
+}
+li.menu-item{
+	position:relative;/*为使得子元素绝对定位生效*/
+}
+ul{
+    background-color:#ffcc66;
+	list-style:none;/*或list-style-type:none;*/
+	padding:0;
+	margin:0;
+	text-align:center;
+	}
+li{
+	margin:0;
+	padding:0.5em 0;
+	/*border:1px solid red;*/
+        font-size: 30px;
+        font-weight: 700;
+       
+}
+a{
+	text-decoration: none;
+        color:#000033;
+        text-shadow:3px 3px 3px #f00;
+}
+            dl {
+	height:150px;
+	padding:auto 2%;
+	display: flex;
+}
+
+dt {
+	margin-left:50px;
+	flex:4;
+	overflow: hidden;/*隐藏图片溢出部分*/
+}
+dd {
+	margin-left:5%;
+	margin-right:2%;
+	flex:6;
+	display: flex;
+	flex-direction:column;
+}
+dd h2 {
+	margin: 0;
+	/*font-size: 1.1em;*/
+	font-weight:lighter;
+	line-height: 150px;
+	flex:6;
+        text-align: center;
+        
+}
+img{margin: 5px;}
+body{background-color: #ffcc66;}
+dl:hover{background-color:  #66ff66;}
+#a2{ color: #66ff99; }
+</style>
+    </head>
+    <body>
+         <ul class="nav">
+	<li class="menu-item"><a href="index1.html">概览</a>
+            <li class="menu-item"><a href="pl.html">评论</a>
+            <li class="menu-item"><a href="gl.html" id="a2">攻略</a>
+                    <li class="menu-item"><a href="dt.html">地图</a>
+            </ul>
+        <a href="mianfei.html"><dl >
+           <dt><img src="image/yxh.jpeg" height="100%"/>&nbsp;&nbsp;<img src="image/kzxz.jpeg" height="100%"/></dt>
+			<dd>
+				<h2>宽窄巷子，首先这里是免费的，不管什么时候去都可以。</h2>
+				
+			</dd>
+		</dl></a> 
+        <a href="rtd.html"> <dl>
+            <dt><img src="image/rjr.jpg" height="100%"/><img src="image/rjr1.jpg" height="100%"/></dt>
+			<dd>
+				<h2>“五一”小长假成都宽窄巷子人挤人，游客抱怨：鞋子被踩掉七八次</h2>
+				
+			</dd>
+		</dl></a> 
+        	
+        <a href="lcg.html"><dl >
+            <dt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="image/lzg.jpg" height="100%"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="image/lzg1.jpg" height="100%"/></dt>
+			<dd>
+				<h2>感受光阴故事！假期到成都宽窄巷子看场老茶馆影像展。</h2>
+				
+			</dd>
+		</dl></a> 
+                	
+        <a href="cqc.html"> <dl>
+            <dt><img src="image/cqc.jpg" height="100%"/><img src="image/cqc1.jpg" height="100%"/></dt>
+			<dd>
+				<h2>成都旅游最值得去的三个景点，武侯祠看历史，宽窄巷子吃到撑。</h2>
+			</dd>
+		</dl></a> 
+    </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #user_info{
+         width:800px;
+         height: 300px;
+         border: aquamarine 1px dashed;
+         background-color: beige;
+         margin: 0 auto;
+            padding-left: 30px;
+            padding-top: 20px;
+        }
+        #user_info_board {line-height: 30px}
+        #user_hobby{line-height: unset}
+        a{ margin-left:900px;
+        text-decoration: none;
+         color:#000033;
+        text-shadow:3px 3px 3px #f00;
+        background-color: #ffcc66;
+        font-size: 36px;
+        }
+    </style>
+</head>
+<body style=" background: url('宽窄巷子/image/homepage.jpeg')">
+
+<div id="user_info">
+    <div id="user_info_board">
+        用户名:<span id="user_name"></span><br>
+        性别:<span id="user_sex"></span><br>
+        账号:<span id="user_id"></span><br>
+        爱好:<span id="user_hobby" style="border: black 2px solid">adadasss</span><br>
+    </div>
+</div>
+<div id="user_orders" style="width: 300px; background-color: aquamarine ">
+    <table>
+
+
+    </table>
+</div>
+<a href="index.html" target="_parent">回到首页</a>
+<script>
+     var xhr=new XMLHttpRequest();
+     xhr.open("post","homepage",true)
+     xhr.setRequestHeader("content-type","application/x-www-form-urlencoded;charset=utf-8")
+     xhr.onload=function () {
+          if(xhr.status==200){
+               var info=xhr.responseText.split("*")
+
+              document.getElementById("user_name").innerHTML=info[0];
+              document.getElementById("user_sex").innerHTML=info[1];
+              document.getElementById("user_id").innerHTML=info[2];
+              document.getElementById("user_hobby").innerHTML=info[3];
+
+          }
+     }
+
+     var str="user_id="+sessionStorage.getItem("user_id")
+     xhr.send(str)
+
+
+
+
+     var xhr2=new XMLHttpRequest();
+     xhr2.open("post","orders",true)
+     xhr2.setRequestHeader("content-type","application/x-www-form-urlencoded;charset=utf-8")
+     xhr2.onload=function () {
+         if(xhr2.status==200){
+           var str="<caption>已成交订单</caption><th>订单编号</th><th>商品编号</th>"
+             var user_order=document.querySelector("#user_orders table");
+           user_order.innerHTML=str;
+
+             var orders=xhr2.responseText.split("+")
+
+             for(var i in orders){
+
+                 // user_order.innerHTML+="<tr>"
+
+                              var order=orders[i].split("*")
+                            user_order.innerHTML+="<tr>"+"<td>"+order[0]+"</td>"+"<td>"+order[1]+"</td>"+"</tr>"
+
+
+                 // user_order.innerHTML+="</tr>"
+             }
+
+         }
+     }
+     xhr2.send(str)
+
+
+
+
+</script>
+</body>
+</html>
